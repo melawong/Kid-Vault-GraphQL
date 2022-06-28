@@ -1,0 +1,10 @@
+schema
+  @sdl(
+    files: [
+      "contacts/index.graphql"
+      "vaccinations/index.graphql"
+      "students/index.graphql"
+    ]
+  ) {
+  query: Query
+}

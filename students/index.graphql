@@ -1,0 +1,18 @@
+type RootEntry {
+  birth_date: String
+  classroom: String
+  first_name: String
+  id: Int
+  last_name: String
+}
+
+type Query {
+  myQuery: [RootEntry]
+    @rest(
+      endpoint: "https://test-mom-api.herokuapp.com/students"
+      headers: [
+        { name: "authentication", value: "$authentication_f43f208820;" }
+      ]
+      configuration: "curl_import_config"
+    )
+}
