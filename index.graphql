@@ -2,8 +2,9 @@ schema
   @sdl(
     files: [
       "contacts/index.graphql"
-      "vaccinations/index.graphql"
+      "student/index.graphql"
       "students/index.graphql"
+      "vaccinations/index.graphql"
     ]
   ) {
   query: Query
