@@ -2,7 +2,6 @@ schema
   @sdl(
     files: [
       "contacts/index.graphql"
-      "student/index.graphql"
       "students/index.graphql"
       "vaccinations/index.graphql"
     ]

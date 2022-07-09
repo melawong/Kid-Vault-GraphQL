@@ -1,12 +1,12 @@
 type StudentEntry {
-  _id: Int
+  id: Int
   first_name: String
   last_name: String
   birth_date: String
   classroom: String
 }
 
-type StudentInput {
+input StudentInput {
   first_name: String!
   last_name: String!
   birth_date: String!
@@ -14,7 +14,7 @@ type StudentInput {
 }
 
 type Query {
-  myQuery: [StudentEntry]
+  allStudentsQuery: [StudentEntry]!
     @rest(
       endpoint: "https://test-mom-api.herokuapp.com/students"
       headers: [
@@ -24,10 +24,18 @@ type Query {
     )
 }
 
+type Query {
+  studentQuery(studentId: Int!): [StudentEntry]!
+    @rest(
+      endpoint: "https://test-mom-api.herokuapp.com/students/$studentId"
+      configuration: "curl_import_config"
+    )
+}
+
 type Mutation {
   addStudent(data: StudentInput!): [StudentEntry]!
     @rest(
+      method: POST
       endpoint: "https://test-mom-api.herokuapp.com/students"
-      configuration: "curl_import_config"
     )
 }
