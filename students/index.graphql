@@ -16,3 +16,11 @@ type Query {
       configuration: "curl_import_config"
     )
 }
+
+type Mutation {
+  addStudentMutation: [RootEntry]
+    @rest(
+      endpoint: "https://test-mom-api.herokuapp.com/students"
+      configuration: "curl_import_config"
+    )
+}
