@@ -46,17 +46,13 @@ type MedicalRecord {
 }
 
 type Query {
-  getMedicalRecordByStudentId(student_id: Int!): [MedicalRecord]
+  getMedicalRecordByStudentId(student_id: Int): [MedicalRecord]
     @rest(endpoint: "https://test-mom-api.herokuapp.com/medicalrecords")
-}
 
-type Query {
-  getContactsByStudentId(student_id: Int!): [Contact]
+  getContactsByStudentId(student_id: Int): [Contact]
     @rest(endpoint: "https://test-mom-api.herokuapp.com/contacts")
-}
 
-type Query {
-  getAllStudents: [Student]!
+  getAllStudents: [Student]
     @rest(
       endpoint: "https://test-mom-api.herokuapp.com/students"
       headers: [
@@ -64,10 +60,8 @@ type Query {
       ]
       configuration: "curl_import_config"
     )
-}
 
-type Query {
-  getStudentById(student_id: Int!): Student!
+  getStudentById(student_id: Int!): Student
     @rest(
       endpoint: "https://test-mom-api.herokuapp.com/students/$studentId"
       configuration: "curl_import_config"
@@ -75,9 +69,11 @@ type Query {
 }
 
 type Mutation {
-  addStudent(first_name: String! last_name: String! birth_date: String! classroom: String!): JSON
-    @rest(
-      method: POST
-      endpoint: "https://test-mom-api.herokuapp.com/students"
-    )
+  addStudent(
+    first_name: String!
+    last_name: String!
+    birth_date: String!
+    classroom: String!
+  ): JSON
+    @rest(method: POST, endpoint: "https://test-mom-api.herokuapp.com/students")
 }
