@@ -9,7 +9,7 @@ type Student {
       query: "getContactsByStudentId"
       arguments: [{ name: "student_id", field: "id" }]
     )
-  medical_record: [MedicalRecord]
+  medical_record: MedicalRecord
     @materializer(
       query: "getMedicalRecordByStudentId"
       arguments: [{ name: "student_id", field: "id" }]
