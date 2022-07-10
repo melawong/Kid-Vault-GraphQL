@@ -31,6 +31,6 @@ type Mutation {
     phone: String!
     username: String!
     password: String!
-  ): AddUserResponse
-    @rest(method: POST, endpoint: "https://test-mom-api.herokuapp.com/users", resultroot: "token")
+  ): JSON
+    @rest(method: POST, endpoint: "https://test-mom-api.herokuapp.com/users")
 }
