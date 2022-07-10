@@ -47,7 +47,7 @@ type MedicalRecord {
 
 type Query {
 
-  getMedicalRecordByStudentId(student_id: Int!): [MedicalRecord]
+  getMedicalRecordByStudentId(student_id: Int!): MedicalRecord
     @rest(
       endpoint: "https://test-mom-api.herokuapp.com/medicalrecords"
       filter: "student_id==1"
