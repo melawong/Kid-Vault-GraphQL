@@ -1,9 +1,19 @@
-type StudentEntry {
+type Student {
   id: Int
   first_name: String
   last_name: String
   birth_date: String
   classroom: String
+  contacts: [Contact]
+    @materializer(
+      query: "getContactsByStudentId"
+      arguments: [{ name: "student_id", field: "id" }]
+    )
+  medical_record: [MedicalRecord]
+    @materializer(
+      query: "getMedicalRecordByStudentId"
+      arguments: [{ name: "student_id", field: "id" }]
+    )
 }
 
 input StudentInput {
@@ -13,8 +23,40 @@ input StudentInput {
   classroom: String!
 }
 
+type Contact {
+  email: String
+  name: String
+  other: String
+  phone: String
+  relation: String
+  student_id: Int
+}
+
+type MedicalRecord {
+  student_id: Int
+  student_weight: Float
+  student_height: Float
+  polio: String
+  mmr: String
+  covid1: String
+  covid2: String
+  flu: String
+  tb: String
+  tetanus: String
+}
+
 type Query {
-  allStudentsQuery: [StudentEntry]!
+  getMedicalRecordByStudentId(student_id: Int!): [MedicalRecord]
+    @rest(endpoint: "https://test-mom-api.herokuapp.com/medicalrecords")
+}
+
+type Query {
+  getContactsByStudentId(student_id: Int!): [Contact]
+    @rest(endpoint: "https://test-mom-api.herokuapp.com/contacts")
+}
+
+type Query {
+  getAllStudents: [Student]!
     @rest(
       endpoint: "https://test-mom-api.herokuapp.com/students"
       headers: [
@@ -25,7 +67,7 @@ type Query {
 }
 
 type Query {
-  studentQuery(studentId: Int!): [StudentEntry]!
+  getStudentById(student_id: Int!): Student!
     @rest(
       endpoint: "https://test-mom-api.herokuapp.com/students/$studentId"
       configuration: "curl_import_config"
@@ -33,7 +75,7 @@ type Query {
 }
 
 type Mutation {
-  addStudent(data: StudentInput!): [StudentEntry]!
+  addStudent(first_name: String! last_name: String! birth_date: String! classroom: String!): JSON
     @rest(
       method: POST
       endpoint: "https://test-mom-api.herokuapp.com/students"
