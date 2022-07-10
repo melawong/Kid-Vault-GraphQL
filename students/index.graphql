@@ -46,11 +46,18 @@ type MedicalRecord {
 }
 
 type Query {
-  getMedicalRecordByStudentId(student_id: Int): [MedicalRecord]
-    @rest(endpoint: "https://test-mom-api.herokuapp.com/medicalrecords")
 
-  getContactsByStudentId(student_id: Int): [Contact]
-    @rest(endpoint: "https://test-mom-api.herokuapp.com/contacts")
+  getMedicalRecordByStudentId(student_id: Int!): [MedicalRecord]
+    @rest(
+      endpoint: "https://test-mom-api.herokuapp.com/medicalrecords"
+      filter: "student_id==1"
+    )
+
+  getContactsByStudentId(student_id: Int!): [Contact]
+    @rest(
+      endpoint: "https://test-mom-api.herokuapp.com/contacts"
+      filter: "student_id==1"
+    )
 
   getAllStudents: [Student]
     @rest(
@@ -63,7 +70,7 @@ type Query {
 
   getStudentById(student_id: Int!): Student
     @rest(
-      endpoint: "https://test-mom-api.herokuapp.com/students/$studentId"
+      endpoint: "https://test-mom-api.herokuapp.com/students/$student_id"
       configuration: "curl_import_config"
     )
 }
