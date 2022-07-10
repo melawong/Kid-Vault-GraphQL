@@ -1,0 +1,12 @@
+type UserEntry {
+  email: String
+  first_name: String
+  is_guardian: Boolean
+  last_name: String
+  phone: String
+  username: String
+}
+
+type Query {
+  users: [UserEntry] @rest(endpoint: "https://test-mom-api.herokuapp.com/users")
+}

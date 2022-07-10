@@ -4,6 +4,7 @@ type Student {
   last_name: String
   birth_date: String
   classroom: String
+  image_url: String
   contacts: [Contact]
     @materializer(
       query: "getContactsByStudentId"
@@ -46,7 +47,6 @@ type MedicalRecord {
 }
 
 type Query {
-
   getMedicalRecordByStudentId(student_id: Int!): MedicalRecord
     @rest(
       endpoint: "https://test-mom-api.herokuapp.com/medicalrecords"
@@ -61,7 +61,7 @@ type Query {
 
   getAllStudents: [Student]
     @rest(
-      endpoint: "https://test-mom-api.herokuapp.com/students"
+      endpoint: "http://test-mom-api.herokuapp.com/students"
       headers: [
         { name: "authentication", value: "$authentication_f43f208820;" }
       ]
@@ -82,5 +82,8 @@ type Mutation {
     birth_date: String!
     classroom: String!
   ): JSON
-    @rest(method: POST, endpoint: "https://test-mom-api.herokuapp.com/students")
+    @rest(
+      method: POST
+      endpoint: "https://test-mom-api.herokuapp.com/students"
+    )
 }
