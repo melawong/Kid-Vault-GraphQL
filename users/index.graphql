@@ -8,12 +8,6 @@ type User {
   token: String
 }
 
-type AddUserResponse {
-  token: String
-  error: String
-}
-
-
 input UserInput {
   first_name: String!
   last_name: String!
