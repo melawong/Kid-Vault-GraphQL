@@ -81,6 +81,7 @@ type Mutation {
     last_name: String!
     birth_date: String!
     classroom: String!
+    image_url: String!
   ): JSON
     @rest(
       method: POST
