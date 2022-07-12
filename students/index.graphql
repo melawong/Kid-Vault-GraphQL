@@ -62,8 +62,16 @@ type Query {
       configuration: "curl_import_config"
     )
 
+  getStudentsByGuardianUsername(guardian_username: String!): [Student]
+    @rest(
+      endpoint: "https://test-mom-api.herokuapp.com/guardianchildren/$guardian_username"
+      configuration: "curl_import_config"
+    )
+
   getMedicalRecordsByStudentId(student_id: Int): MedicalRecord
-    @rest(endpoint: "https://test-mom-api.herokuapp.com/medicalrecords/$student_id")
+    @rest(
+      endpoint: "https://test-mom-api.herokuapp.com/medicalrecords/$student_id"
+    )
 
   getContactsByStudentId(student_id: Int): [Contact]
     @rest(endpoint: "https://test-mom-api.herokuapp.com/contacts/$student_id")
