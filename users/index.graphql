@@ -8,15 +8,6 @@ type User {
   token: String
 }
 
-input UserInput {
-  first_name: String!
-  last_name: String!
-  email: String!
-  phone: String!
-  username: String!
-  password: String!
-}
-
 type Mutation {
   addUser(
     first_name: String!
@@ -27,4 +18,10 @@ type Mutation {
     password: String!
   ): JSON
     @rest(method: POST, endpoint: "https://test-mom-api.herokuapp.com/signup")
+
+  loginUser(
+    email: String!
+    phone: String!
+  ): JSON
+    @rest(method: POST, endpoint: "https://test-mom-api.herokuapp.com/login")
 }
