@@ -1,6 +1,7 @@
 schema
   @sdl(
     files: [
+      "postgresql/index.graphql"
       "students/index.graphql"
       "users/index.graphql"
     ]

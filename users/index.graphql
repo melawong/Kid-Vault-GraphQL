@@ -26,5 +26,5 @@ type Mutation {
     username: String!
     password: String!
   ): JSON
-    @rest(method: POST, endpoint: "https://test-mom-api.herokuapp.com/users")
+    @rest(method: POST, endpoint: "https://test-mom-api.herokuapp.com/signup")
 }

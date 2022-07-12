@@ -1,0 +1,263 @@
+type Contacts {
+  email: String
+  id: Int!
+  name: String!
+  other: String
+  phone: String
+  relation: String
+  student_id: Int
+  students: Students
+    @materializer(
+      query: "getStudents"
+      arguments: [{ name: "id", field: "student_id" }]
+    )
+}
+
+type Medical_records {
+  covid1: String
+  covid2: String
+  flu: String
+  mmr: String
+  polio: String
+  student_height: Float
+  student_id: Int!
+  student_weight: Float
+  students: Students
+    @materializer(
+      query: "getStudents"
+      arguments: [{ name: "id", field: "student_id" }]
+    )
+  tb: String
+  tetanus: String
+}
+
+type Students {
+  birth_date: String!
+  classroom: String
+  contactsList: [Contacts] @materializer(query: "getContactsUsingStudent_id")
+  first_name: String!
+  id: Int!
+  image_url: String
+  last_name: String!
+  medical_records: Medical_records
+    @materializer(query: "getMedical_recordsUsingStudent_id")
+  usersList: [Users] @materializer(query: "getUsersUsingGuardian_children")
+}
+
+type Users {
+  email: String!
+  first_name: String!
+  is_guardian: Boolean
+  last_name: String!
+  password: String!
+  phone: String!
+  studentsList: [Students]
+    @materializer(query: "getStudentsUsingGuardian_children")
+  username: String!
+}
+
+"""
+These are some examples of queries generated from the schema. Feel free to modify them or add your own.
+"""
+type Query {
+  getContactsList: [Contacts]
+    @dbquery(
+      type: "postgresql"
+      schema: "public"
+      table: "contacts"
+      configuration: "postgresql_config"
+    )
+  getContacts(id: Int!): Contacts
+    @dbquery(
+      type: "postgresql"
+      schema: "public"
+      table: "contacts"
+      configuration: "postgresql_config"
+    )
+  getMedical_recordsList: [Medical_records]
+    @dbquery(
+      type: "postgresql"
+      schema: "public"
+      table: "medical_records"
+      configuration: "postgresql_config"
+    )
+  getMedical_records(student_id: Int!): Medical_records
+    @dbquery(
+      type: "postgresql"
+      schema: "public"
+      table: "medical_records"
+      configuration: "postgresql_config"
+    )
+  getStudentsList: [Students]
+    @dbquery(
+      type: "postgresql"
+      schema: "public"
+      table: "students"
+      configuration: "postgresql_config"
+    )
+  getStudents(id: Int!): Students
+    @dbquery(
+      type: "postgresql"
+      schema: "public"
+      table: "students"
+      configuration: "postgresql_config"
+    )
+  getUsersUsingGuardian_children(id: Int!): [Users]
+    @dbquery(
+      type: "postgresql"
+      query: """
+      SELECT T."email", T."first_name", T."is_guardian", T."last_name", T."password", T."phone", T."username"
+        FROM "public"."users" T, "public"."guardian_children" V
+        WHERE V."child_id" = $1
+          AND V."guardian_username" = T."username"
+      """
+      configuration: "postgresql_config"
+    )
+  getContactsUsingStudent_id(id: Int!): [Contacts]
+    @dbquery(
+      type: "postgresql"
+      query: """
+      SELECT T."email", T."id", T."name", T."other", T."phone", T."relation", T."student_id"
+        FROM "public"."contacts" T
+        WHERE T."student_id" = $1
+      """
+      configuration: "postgresql_config"
+    )
+  getMedical_recordsUsingStudent_id(id: Int!): Medical_records
+    @dbquery(
+      type: "postgresql"
+      query: """
+      SELECT T."covid1", T."covid2", T."flu", T."mmr", T."polio", T."student_height", T."student_id", T."student_weight", T."tb", T."tetanus"
+        FROM "public"."medical_records" T
+        WHERE T."student_id" = $1
+      """
+      configuration: "postgresql_config"
+    )
+  getUsersList: [Users]
+    @dbquery(
+      type: "postgresql"
+      schema: "public"
+      table: "users"
+      configuration: "postgresql_config"
+    )
+  getUsers(username: String!): Users
+    @dbquery(
+      type: "postgresql"
+      schema: "public"
+      table: "users"
+      configuration: "postgresql_config"
+    )
+  getStudentsUsingGuardian_children(username: String!): [Students]
+    @dbquery(
+      type: "postgresql"
+      query: """
+      SELECT T."birth_date", T."classroom", T."first_name", T."id", T."image_url", T."last_name"
+        FROM "public"."students" T, "public"."guardian_children" V
+        WHERE V."guardian_username" = $1
+          AND V."child_id" = T."id"
+      """
+      configuration: "postgresql_config"
+    )
+}
+
+"""
+These are some examples of mutations generated from the schema. Feel free to modify them or add your own.
+"""
+type Mutation {
+  insertContacts(
+    other: String!
+    email: String!
+    name: String!
+    phone: String!
+    student_id: Int!
+    relation: String!
+  ): Contacts
+    @dbquery(
+      type: "postgresql"
+      schema: "public"
+      table: "contacts"
+      dml: INSERT
+      configuration: "postgresql_config"
+    )
+  deleteContacts(id: Int!): Contacts
+    @dbquery(
+      type: "postgresql"
+      schema: "public"
+      table: "contacts"
+      dml: DELETE
+      configuration: "postgresql_config"
+    )
+  insertMedical_records(
+    student_weight: Float!
+    flu: String!
+    covid2: String!
+    tb: String!
+    covid1: String!
+    tetanus: String!
+    student_height: Float!
+    student_id: Int!
+    mmr: String!
+    polio: String!
+  ): Medical_records
+    @dbquery(
+      type: "postgresql"
+      schema: "public"
+      table: "medical_records"
+      dml: INSERT
+      configuration: "postgresql_config"
+    )
+  deleteMedical_records(student_id: Int!): Medical_records
+    @dbquery(
+      type: "postgresql"
+      schema: "public"
+      table: "medical_records"
+      dml: DELETE
+      configuration: "postgresql_config"
+    )
+  insertStudents(
+    last_name: String!
+    classroom: String!
+    birth_date: String!
+    first_name: String!
+    image_url: String!
+  ): Students
+    @dbquery(
+      type: "postgresql"
+      schema: "public"
+      table: "students"
+      dml: INSERT
+      configuration: "postgresql_config"
+    )
+  deleteStudents(id: Int!): Students
+    @dbquery(
+      type: "postgresql"
+      schema: "public"
+      table: "students"
+      dml: DELETE
+      configuration: "postgresql_config"
+    )
+  insertUsers(
+    last_name: String!
+    email: String!
+    phone: String!
+    first_name: String!
+    username: String!
+    is_guardian: Boolean!
+    password: String!
+  ): Users
+    @dbquery(
+      type: "postgresql"
+      schema: "public"
+      table: "users"
+      dml: INSERT
+      configuration: "postgresql_config"
+    )
+  deleteUsers(username: String!): Users
+    @dbquery(
+      type: "postgresql"
+      schema: "public"
+      table: "users"
+      dml: DELETE
+      configuration: "postgresql_config"
+    )
+}
