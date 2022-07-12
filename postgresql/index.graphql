@@ -13,6 +13,7 @@ type Contacts {
     )
 }
 
+
 type Medical_records {
   covid1: String
   covid2: String
