@@ -3,7 +3,6 @@ schema
     files: [
       "students/index.graphql"
       "users/index.graphql"
-      "Users1/index.graphql"
     ]
   ) {
   query: Query

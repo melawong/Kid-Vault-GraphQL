@@ -12,7 +12,7 @@ type Student {
     )
   medical_record: MedicalRecord
     @materializer(
-      query: "getMedicalRecordByStudentId"
+      query: "getMedicalRecordsByStudentId"
       arguments: [{ name: "student_id", field: "id" }]
     )
 }
@@ -47,18 +47,6 @@ type MedicalRecord {
 }
 
 type Query {
-  getMedicalRecordByStudentId(student_id: Int!): MedicalRecord
-    @rest(
-      endpoint: "https://test-mom-api.herokuapp.com/medicalrecords"
-      filter: "student_id==1"
-    )
-
-  getContactsByStudentId(student_id: Int!): [Contact]
-    @rest(
-      endpoint: "https://test-mom-api.herokuapp.com/contacts"
-      filter: "student_id==1"
-    )
-
   getAllStudents: [Student]
     @rest(
       endpoint: "http://test-mom-api.herokuapp.com/students"
@@ -73,6 +61,12 @@ type Query {
       endpoint: "https://test-mom-api.herokuapp.com/students/$student_id"
       configuration: "curl_import_config"
     )
+
+  getMedicalRecordsByStudentId(student_id: Int): MedicalRecord
+    @rest(endpoint: "https://test-mom-api.herokuapp.com/medicalrecords/$student_id")
+
+  getContactsByStudentId(student_id: Int): [Contact]
+    @rest(endpoint: "https://test-mom-api.herokuapp.com/contacts/$student_id")
 }
 
 type Mutation {
@@ -83,8 +77,5 @@ type Mutation {
     classroom: String!
     image_url: String!
   ): JSON
-    @rest(
-      method: POST
-      endpoint: "https://test-mom-api.herokuapp.com/students"
-    )
+    @rest(method: POST, endpoint: "https://test-mom-api.herokuapp.com/students")
 }
