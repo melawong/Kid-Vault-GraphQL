@@ -1,13 +1,3 @@
-type User {
-  first_name: String
-  last_name: String
-  email: String
-  phone: String
-  username: String
-  password: String
-  token: String
-}
-
 type Mutation {
   addUser(
     first_name: String!

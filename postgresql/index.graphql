@@ -13,8 +13,7 @@ type Contacts {
     )
 }
 
-
-type Medical_records {
+type MedicalRecords {
   covid1: String
   covid2: String
   flu: String
@@ -35,14 +34,14 @@ type Medical_records {
 type Students {
   birth_date: String!
   classroom: String
-  contactsList: [Contacts] @materializer(query: "getContactsUsingStudent_id")
+  contacts_list: [Contacts] @materializer(query: "getContactsByStudentId")
   first_name: String!
   id: Int!
   image_url: String
   last_name: String!
-  medical_records: Medical_records
-    @materializer(query: "getMedical_recordsUsingStudent_id")
-  usersList: [User] @materializer(query: "getUsersUsingGuardian_children")
+  medical_records: MedicalRecords
+    @materializer(query: "getMedicalRecordsByStudentId")
+  users_list: [User] @materializer(query: "getUsersByGuardianChildren")
 }
 
 type User {
@@ -52,15 +51,23 @@ type User {
   last_name: String!
   password: String!
   phone: String!
-  studentsList: [Students]
-    @materializer(query: "getStudentsUsingGuardian_children")
+  students_list: [Students]
+    @materializer(query: "getStudentsByGuardianChildren")
   username: String!
 }
 
-"""
-These are some examples of queries generated from the schema. Feel free to modify them or add your own.
-"""
 type Query {
+  getCovidList(student_id: Int!, classroom: String!): [Students]
+    @dbquery(
+      type: "postgresql"
+      query: """
+      SELECT T."last_name", T."id", T."first_name"
+        FROM "public"."students" T
+        WHERE NOT T."id" = $1 AND "classroom" = $2
+      """
+      configuration: "postgresql_config"
+    )
+
   getContactsList: [Contacts]
     @dbquery(
       type: "postgresql"
@@ -75,14 +82,14 @@ type Query {
       table: "contacts"
       configuration: "postgresql_config"
     )
-  getMedicalRecordsList: [Medical_records]
+  getMedicalRecordsList: [MedicalRecords]
     @dbquery(
       type: "postgresql"
       schema: "public"
       table: "medical_records"
       configuration: "postgresql_config"
     )
-  getMedicalRecordsByStudent_id(student_id: Int!): Medical_records
+  getMedicalRecordsByStudent_id(student_id: Int!): MedicalRecords
     @dbquery(
       type: "postgresql"
       schema: "public"
@@ -124,7 +131,7 @@ type Query {
       """
       configuration: "postgresql_config"
     )
-  getMedicalRecordsByStudentId(id: Int!): Medical_records
+  getMedicalRecordsByStudentId(id: Int!): MedicalRecords
     @dbquery(
       type: "postgresql"
       query: """
@@ -161,9 +168,6 @@ type Query {
     )
 }
 
-"""
-These are some examples of mutations generated from the schema. Feel free to modify them or add your own.
-"""
 type Mutation {
   insertContacts(
     other: String!
@@ -188,7 +192,7 @@ type Mutation {
       dml: DELETE
       configuration: "postgresql_config"
     )
-  insertMedical_records(
+  insertMedicalRecords(
     student_weight: Float!
     flu: String!
     covid2: String!
@@ -199,7 +203,7 @@ type Mutation {
     student_id: Int!
     mmr: String!
     polio: String!
-  ): Medical_records
+  ): MedicalRecords
     @dbquery(
       type: "postgresql"
       schema: "public"
@@ -207,7 +211,7 @@ type Mutation {
       dml: INSERT
       configuration: "postgresql_config"
     )
-  deleteMedical_records(student_id: Int!): Medical_records
+  deleteMedicalRecords(student_id: Int!): MedicalRecords
     @dbquery(
       type: "postgresql"
       schema: "public"
