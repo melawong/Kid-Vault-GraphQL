@@ -131,6 +131,19 @@ type Query {
       """
       configuration: "postgresql_config"
     )
+  getPrimaryContactByStudentId(id: Int!): Contacts
+    @dbquery(
+      type: "postgresql"
+      query: """
+      SELECT T."email", T."id", T."name", T."other", T."phone", T."relation", T."student_id"
+        FROM "public"."contacts" T
+        WHERE T."student_id" = $1
+        LIMIT 1
+      """
+      configuration: "postgresql_config"
+    )
+
+
   getMedicalRecordsByStudentId(id: Int!): MedicalRecords
     @dbquery(
       type: "postgresql"
