@@ -44,6 +44,14 @@ type Students {
   users_list: [User] @materializer(query: "getUsersByGuardianChildren")
 }
 
+type ClassroomList {
+  first_name: String
+  last_name: String
+  id: Int
+  primary_contact: Contacts
+    @materializer(query: "getPrimaryContactByStudentId")
+}
+
 type User {
   email: String!
   first_name: String!
@@ -57,13 +65,21 @@ type User {
 }
 
 type Query {
-  getCovidList(student_id: Int!, classroom: String!): [Students]
+  getCovidList(id: Int! classroom: String): [ClassroomList]
+    @sequence(
+      steps: [
+        {query: "getStudents"}
+        {query: "getClassroomList"}
+      ]
+    )
+
+  getClassroomList(classroom: String!): [ClassroomList]
     @dbquery(
       type: "postgresql"
       query: """
       SELECT T."last_name", T."id", T."first_name"
         FROM "public"."students" T
-        WHERE NOT T."id" = $1 AND "classroom" = $2
+        WHERE "classroom" = $1
       """
       configuration: "postgresql_config"
     )
