@@ -42,10 +42,10 @@ type Students {
   last_name: String!
   medical_records: Medical_records
     @materializer(query: "getMedical_recordsUsingStudent_id")
-  usersList: [Users] @materializer(query: "getUsersUsingGuardian_children")
+  usersList: [User] @materializer(query: "getUsersUsingGuardian_children")
 }
 
-type Users {
+type User {
   email: String!
   first_name: String!
   is_guardian: Boolean
@@ -68,21 +68,21 @@ type Query {
       table: "contacts"
       configuration: "postgresql_config"
     )
-  getContacts(id: Int!): Contacts
+  getContactById(id: Int!): Contacts
     @dbquery(
       type: "postgresql"
       schema: "public"
       table: "contacts"
       configuration: "postgresql_config"
     )
-  getMedical_recordsList: [Medical_records]
+  getMedicalRecordsList: [Medical_records]
     @dbquery(
       type: "postgresql"
       schema: "public"
       table: "medical_records"
       configuration: "postgresql_config"
     )
-  getMedical_records(student_id: Int!): Medical_records
+  getMedicalRecordsByStudent_id(student_id: Int!): Medical_records
     @dbquery(
       type: "postgresql"
       schema: "public"
@@ -103,7 +103,7 @@ type Query {
       table: "students"
       configuration: "postgresql_config"
     )
-  getUsersUsingGuardian_children(id: Int!): [Users]
+  getUsersByGuardianChildren(id: Int!): [User]
     @dbquery(
       type: "postgresql"
       query: """
@@ -114,7 +114,7 @@ type Query {
       """
       configuration: "postgresql_config"
     )
-  getContactsUsingStudent_id(id: Int!): [Contacts]
+  getContactsByStudentId(id: Int!): [Contacts]
     @dbquery(
       type: "postgresql"
       query: """
@@ -124,7 +124,7 @@ type Query {
       """
       configuration: "postgresql_config"
     )
-  getMedical_recordsUsingStudent_id(id: Int!): Medical_records
+  getMedicalRecordsByStudentId(id: Int!): Medical_records
     @dbquery(
       type: "postgresql"
       query: """
@@ -134,21 +134,21 @@ type Query {
       """
       configuration: "postgresql_config"
     )
-  getUsersList: [Users]
+  getUsersList: [User]
     @dbquery(
       type: "postgresql"
       schema: "public"
       table: "users"
       configuration: "postgresql_config"
     )
-  getUsers(username: String!): Users
+  getUserByUsername(username: String!): User
     @dbquery(
       type: "postgresql"
       schema: "public"
       table: "users"
       configuration: "postgresql_config"
     )
-  getStudentsUsingGuardian_children(username: String!): [Students]
+  getStudentsByGuardianChildren(username: String!): [Students]
     @dbquery(
       type: "postgresql"
       query: """
@@ -245,7 +245,7 @@ type Mutation {
     username: String!
     is_guardian: Boolean!
     password: String!
-  ): Users
+  ): User
     @dbquery(
       type: "postgresql"
       schema: "public"
@@ -253,7 +253,7 @@ type Mutation {
       dml: INSERT
       configuration: "postgresql_config"
     )
-  deleteUsers(username: String!): Users
+  deleteUsers(username: String!): User
     @dbquery(
       type: "postgresql"
       schema: "public"
