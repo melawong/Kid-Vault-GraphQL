@@ -34,14 +34,16 @@ type MedicalRecords {
 type Students {
   birth_date: String!
   classroom: String
-  contacts_list: [Contacts] @materializer(query: "getContactsByStudentId")
+  contacts_list: [Contacts]
+    @materializer(query: "getContactsByStudentId")
   first_name: String!
   id: Int!
   image_url: String
   last_name: String!
   medical_records: MedicalRecords
     @materializer(query: "getMedicalRecordsByStudentId")
-  users_list: [User] @materializer(query: "getUsersByGuardianChildren")
+  users_list: [User]
+    @materializer(query: "getUsersByGuardianChildren")
 }
 
 type ClassroomList {
