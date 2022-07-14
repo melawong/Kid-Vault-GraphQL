@@ -4,6 +4,7 @@ schema
       "studentsPostgresql/index.graphql"
       "studentsRest/index.graphql"
       "users/index.graphql"
+      "covidApi/index.graphql"
     ]
   ) {
   query: Query
