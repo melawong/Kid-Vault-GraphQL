@@ -1,9 +1,10 @@
 schema
   @sdl(
     files: [
-      "postgresql/index.graphql"
-      "students/index.graphql"
+      "studentsPostgresql/index.graphql"
+      "studentsRest/index.graphql"
       "users/index.graphql"
+      "covidApi/index.graphql"
     ]
   ) {
   query: Query

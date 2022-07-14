@@ -1,0 +1,7 @@
+type Query {
+  getCurrentStateData: JSON
+    @rest(
+      endpoint: "https://api.covidactnow.org/v2/states.json?apiKey=$apiKey"
+      configuration: "covid_api_config"
+    )
+}

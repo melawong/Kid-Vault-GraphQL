@@ -1,4 +1,4 @@
-type Contacts {
+type Contact {
   email: String
   id: Int!
   name: String!
@@ -6,9 +6,9 @@ type Contacts {
   phone: String
   relation: String
   student_id: Int
-  students: Students
+  student: Student
     @materializer(
-      query: "getStudents"
+      query: "getStudent"
       arguments: [{ name: "id", field: "student_id" }]
     )
 }
@@ -22,36 +22,33 @@ type MedicalRecords {
   student_height: Float
   student_id: Int!
   student_weight: Float
-  students: Students
+  student: Student
     @materializer(
-      query: "getStudents"
+      query: "getStudent"
       arguments: [{ name: "id", field: "student_id" }]
     )
   tb: String
   tetanus: String
 }
 
-type Students {
+type Student {
   birth_date: String!
   classroom: String
-  contacts_list: [Contacts]
-    @materializer(query: "getContactsByStudentId")
+  contacts_list: [Contact] @materializer(query: "getContactsByStudentId")
   first_name: String!
   id: Int!
   image_url: String
   last_name: String!
   medical_records: MedicalRecords
     @materializer(query: "getMedicalRecordsByStudentId")
-  users_list: [User]
-    @materializer(query: "getUsersByGuardianChildren")
+  users_list: [User] @materializer(query: "getUsersByGuardianChildren")
 }
 
 type ClassroomList {
   first_name: String
   last_name: String
   id: Int
-  primary_contact: Contacts
-    @materializer(query: "getPrimaryContactByStudentId")
+  primary_contact: Contact @materializer(query: "getPrimaryContactByStudentId")
 }
 
 type User {
@@ -59,21 +56,14 @@ type User {
   first_name: String!
   is_guardian: Boolean
   last_name: String!
-  password: String!
   phone: String!
-  students_list: [Students]
-    @materializer(query: "getStudentsByGuardianChildren")
+  students_list: [Student] @materializer(query: "getStudentsByGuardianChildren")
   username: String!
 }
 
 type Query {
-  getCovidList(id: Int! classroom: String): [ClassroomList]
-    @sequence(
-      steps: [
-        {query: "getStudents"}
-        {query: "getClassroomList"}
-      ]
-    )
+  getCovidList(id: Int!, classroom: String): [ClassroomList]
+    @sequence(steps: [{ query: "getStudent" }, { query: "getClassroomList" }])
 
   getClassroomList(classroom: String!): [ClassroomList]
     @dbquery(
@@ -86,14 +76,14 @@ type Query {
       configuration: "postgresql_config"
     )
 
-  getContactsList: [Contacts]
+  getContactsList: [Contact]
     @dbquery(
       type: "postgresql"
       schema: "public"
       table: "contacts"
       configuration: "postgresql_config"
     )
-  getContactById(id: Int!): Contacts
+  getContactById(id: Int!): Contact
     @dbquery(
       type: "postgresql"
       schema: "public"
@@ -114,14 +104,14 @@ type Query {
       table: "medical_records"
       configuration: "postgresql_config"
     )
-  getStudentsList: [Students]
+  getStudentList: [Student]
     @dbquery(
       type: "postgresql"
       schema: "public"
       table: "students"
       configuration: "postgresql_config"
     )
-  getStudents(id: Int!): Students
+  getStudent(id: Int!): Student
     @dbquery(
       type: "postgresql"
       schema: "public"
@@ -132,14 +122,14 @@ type Query {
     @dbquery(
       type: "postgresql"
       query: """
-      SELECT T."email", T."first_name", T."is_guardian", T."last_name", T."password", T."phone", T."username"
+      SELECT T."email", T."first_name", T."is_guardian", T."last_name", T."phone", T."username"
         FROM "public"."users" T, "public"."guardian_children" V
         WHERE V."child_id" = $1
           AND V."guardian_username" = T."username"
       """
       configuration: "postgresql_config"
     )
-  getContactsByStudentId(id: Int!): [Contacts]
+  getContactsByStudentId(id: Int!): [Contact]
     @dbquery(
       type: "postgresql"
       query: """
@@ -149,7 +139,7 @@ type Query {
       """
       configuration: "postgresql_config"
     )
-  getPrimaryContactByStudentId(id: Int!): Contacts
+  getPrimaryContactByStudentId(id: Int!): Contact
     @dbquery(
       type: "postgresql"
       query: """
@@ -160,7 +150,6 @@ type Query {
       """
       configuration: "postgresql_config"
     )
-
 
   getMedicalRecordsByStudentId(id: Int!): MedicalRecords
     @dbquery(
@@ -186,7 +175,7 @@ type Query {
       table: "users"
       configuration: "postgresql_config"
     )
-  getStudentsByGuardianChildren(username: String!): [Students]
+  getStudentsByGuardianChildren(username: String!): [Student]
     @dbquery(
       type: "postgresql"
       query: """
@@ -200,14 +189,14 @@ type Query {
 }
 
 type Mutation {
-  insertContacts(
+  insertContact(
     other: String!
     email: String!
     name: String!
     phone: String!
     student_id: Int!
     relation: String!
-  ): Contacts
+  ): Contact
     @dbquery(
       type: "postgresql"
       schema: "public"
@@ -215,7 +204,7 @@ type Mutation {
       dml: INSERT
       configuration: "postgresql_config"
     )
-  deleteContacts(id: Int!): Contacts
+  deleteContact(id: Int!): Contact
     @dbquery(
       type: "postgresql"
       schema: "public"
@@ -250,21 +239,8 @@ type Mutation {
       dml: DELETE
       configuration: "postgresql_config"
     )
-  insertStudents(
-    last_name: String!
-    classroom: String!
-    birth_date: String!
-    first_name: String!
-    image_url: String!
-  ): Students
-    @dbquery(
-      type: "postgresql"
-      schema: "public"
-      table: "students"
-      dml: INSERT
-      configuration: "postgresql_config"
-    )
-  deleteStudents(id: Int!): Students
+
+  deleteStudent(id: Int!): Student
     @dbquery(
       type: "postgresql"
       schema: "public"
@@ -272,7 +248,7 @@ type Mutation {
       dml: DELETE
       configuration: "postgresql_config"
     )
-  insertUsers(
+  insertUser(
     last_name: String!
     email: String!
     phone: String!
@@ -288,7 +264,7 @@ type Mutation {
       dml: INSERT
       configuration: "postgresql_config"
     )
-  deleteUsers(username: String!): User
+  deleteUser(username: String!): User
     @dbquery(
       type: "postgresql"
       schema: "public"

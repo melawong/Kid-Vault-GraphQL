@@ -1,5 +1,5 @@
 type Mutation {
-  addStudent(
+  insertStudent(
     first_name: String!
     last_name: String!
     birth_date: String!
