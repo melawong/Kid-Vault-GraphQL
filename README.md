@@ -25,36 +25,14 @@ If you haven't already, be sure to sign up for and install StepZen.
 
 1. [Register for COVID Act Now](https://apidocs.covidactnow.org/) to get your API key.
 
+
+2. Run stepzen:
+
+```
+$ stepzen start
+```
+
 Create .env file with:
 ```
 STEPZEN_COVID_API_KEY=[YOUR_API_KEY_HERE]
-```
-
-Then run stepzen:
-
-```
-$ stepzen start -p 5002
-```
-
-3. React Front-End => mom-api-frontend
-
-### Installing Dependencies
-
-```
-npm install
-```
-
-### Running the Front End
-
-Create .env file with:
-```
-REACT_APP_API_KEY=*******
-REACT_APP_BASE_URL=*******
-```
-******** = Provide your own.
-
-Then run React:
-
-```
-$ npm start
 ```
