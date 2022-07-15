@@ -1,0 +1,330 @@
+type SantaClaraCountyActuals {
+  cases: Int
+  contactTracers: JSON
+  deaths: Int
+  hospitalBeds: SantaClaraCountyHospitalBeds
+  hsaHospitalBeds: SantaClaraCountyHsaHospitalBeds
+  hsaIcuBeds: SantaClaraCountyHsaIcuBeds
+  icuBeds: SantaClaraCountyIcuBeds
+  negativeTests: JSON
+  newCases: Int
+  newDeaths: Int
+  positiveTests: JSON
+  vaccinationsAdditionalDose: Int
+  vaccinationsCompleted: Int
+  vaccinationsInitiated: Int
+  vaccinationsInitiatedDemographics: SantaClaraCountyVaccinationsInitiatedDemographics
+  vaccinesAdministered: Int
+  vaccinesAdministeredDemographics: JSON
+  vaccinesDistributed: JSON
+}
+type SantaClaraCountyAnnotations {
+  bedsWithCovidPatientsRatio: SantaClaraCountyBedsWithCovidPatientsRatio
+  caseDensity: SantaClaraCountyCaseDensity
+  cases: SantaClaraCountyCases
+  contactTracerCapacityRatio: JSON
+  contactTracers: JSON
+  deaths: SantaClaraCountyDeaths
+  hospitalBeds: SantaClaraCountyHospitalBeds1
+  hsaHospitalBeds: JSON
+  hsaIcuBeds: JSON
+  icuBeds: SantaClaraCountyIcuBeds1
+  icuCapacityRatio: SantaClaraCountyIcuCapacityRatio
+  infectionRate: SantaClaraCountyInfectionRate
+  infectionRateCI90: SantaClaraCountyInfectionRateCI90
+  negativeTests: JSON
+  newCases: SantaClaraCountyNewCases
+  newDeaths: JSON
+  positiveTests: JSON
+  testPositivityRatio: SantaClaraCountyTestPositivityRatio
+  vaccinationsAdditionalDose: SantaClaraCountyVaccinationsAdditionalDose
+  vaccinationsAdditionalDoseRatio: JSON
+  vaccinationsCompleted: SantaClaraCountyVaccinationsCompleted
+  vaccinationsCompletedRatio: JSON
+  vaccinationsInitiated: SantaClaraCountyVaccinationsInitiated
+  vaccinationsInitiatedRatio: JSON
+  vaccinesAdministered: SantaClaraCountyVaccinesAdministered
+  vaccinesDistributed: JSON
+  weeklyCovidAdmissionsPer100k: SantaClaraCountyWeeklyCovidAdmissionsPer100k
+  weeklyNewCasesPer100k: SantaClaraCountyWeeklyNewCasesPer100k
+}
+type SantaClaraCountyAnomalies16Entry {
+  date: Date
+  original_observation: Int
+  type: String
+}
+type SantaClaraCountyAnomalies1Entry {
+  date: Date
+  original_observation: Int
+  type: String
+}
+type SantaClaraCountyAnomalies2Entry {
+  date: Date
+  original_observation: Int
+  type: String
+}
+type SantaClaraCountyAnomalies7Entry {
+  date: Date
+  original_observation: Int
+  type: String
+}
+type SantaClaraCountyAnomalies8Entry {
+  date: Date
+  original_observation: Int
+  type: String
+}
+type SantaClaraCountyAnomalies9Entry {
+  date: Date
+  original_observation: Int
+  type: String
+}
+type SantaClaraCountyBedsWithCovidPatientsRatio {
+  anomalies: [JSON]
+  sources: [SantaClaraCountySourcesEntry]
+}
+type SantaClaraCountyCaseDensity {
+  anomalies: [SantaClaraCountyAnomalies1Entry]
+  sources: [SantaClaraCountySources1Entry]
+}
+type SantaClaraCountyCases {
+  anomalies: [SantaClaraCountyAnomalies2Entry]
+  sources: [SantaClaraCountySources2Entry]
+}
+type SantaClaraCountyCommunityLevels {
+  canCommunityLevel: Int
+  cdcCommunityLevel: Int
+}
+type SantaClaraCountyDeaths {
+  anomalies: [JSON]
+  sources: [SantaClaraCountySources3Entry]
+}
+type SantaClaraCountyHospitalBeds {
+  capacity: Int
+  currentUsageCovid: Int
+  currentUsageTotal: Int
+  weeklyCovidAdmissions: Int
+}
+type SantaClaraCountyHospitalBeds1 {
+  anomalies: [JSON]
+  sources: [SantaClaraCountySources4Entry]
+}
+type SantaClaraCountyHsaHospitalBeds {
+  capacity: Int
+  currentUsageCovid: Int
+  currentUsageTotal: Int
+  weeklyCovidAdmissions: Int
+}
+type SantaClaraCountyHsaIcuBeds {
+  capacity: Int
+  currentUsageCovid: Int
+  currentUsageTotal: Int
+}
+type SantaClaraCountyIcuBeds {
+  capacity: Int
+  currentUsageCovid: Int
+  currentUsageTotal: Int
+}
+type SantaClaraCountyIcuBeds1 {
+  anomalies: [JSON]
+  sources: [SantaClaraCountySources5Entry]
+}
+type SantaClaraCountyIcuCapacityRatio {
+  anomalies: [JSON]
+  sources: [SantaClaraCountySources6Entry]
+}
+type SantaClaraCountyInfectionRate {
+  anomalies: [SantaClaraCountyAnomalies7Entry]
+  sources: [SantaClaraCountySources7Entry]
+}
+type SantaClaraCountyInfectionRateCI90 {
+  anomalies: [SantaClaraCountyAnomalies8Entry]
+  sources: [SantaClaraCountySources8Entry]
+}
+type SantaClaraCountyMetrics {
+  bedsWithCovidPatientsRatio: Float
+  caseDensity: Float
+  contactTracerCapacityRatio: JSON
+  icuCapacityRatio: Float
+  infectionRate: Float
+  infectionRateCI90: Float
+  testPositivityRatio: Float
+  testPositivityRatioDetails: SantaClaraCountyTestPositivityRatioDetails
+  vaccinationsAdditionalDoseRatio: Float
+  vaccinationsCompletedRatio: Float
+  vaccinationsInitiatedRatio: Float
+  weeklyCovidAdmissionsPer100k: Float
+  weeklyNewCasesPer100k: Float
+}
+type SantaClaraCountyNewCases {
+  anomalies: [SantaClaraCountyAnomalies9Entry]
+  sources: [JSON]
+}
+type SantaClaraCountyRace {
+  ai_an: Int
+  asian: Int
+  black: Int
+  latino: Int
+  multiple: Int
+  other: Int
+  pacific_islander: Int
+  unknown: Int
+  white: Int
+}
+type SantaClaraCountyRiskLevels {
+  caseDensity: Int
+  contactTracerCapacityRatio: Int
+  icuCapacityRatio: Int
+  infectionRate: Int
+  overall: Int
+  testPositivityRatio: Int
+}
+type SantaClaraCountyRoot {
+  actuals: SantaClaraCountyActuals
+  annotations: SantaClaraCountyAnnotations
+  cdcTransmissionLevel: Int
+  communityLevels: SantaClaraCountyCommunityLevels
+  country: String
+  county: String
+  fips: Int
+  hsa: Int
+  hsaName: String
+  hsaPopulation: Int
+  lastUpdatedDate: Date
+  lat: JSON
+  level: String
+  locationId: String
+  long: JSON
+  metrics: SantaClaraCountyMetrics
+  population: Int
+  riskLevels: SantaClaraCountyRiskLevels
+  state: String
+  url: String
+}
+type SantaClaraCountySources10Entry {
+  name: String
+  type: String
+  url: String
+}
+type SantaClaraCountySources11Entry {
+  name: String
+  type: String
+  url: String
+}
+type SantaClaraCountySources12Entry {
+  name: String
+  type: String
+  url: String
+}
+type SantaClaraCountySources13Entry {
+  name: String
+  type: String
+  url: String
+}
+type SantaClaraCountySources14Entry {
+  name: String
+  type: String
+  url: String
+}
+type SantaClaraCountySources15Entry {
+  name: String
+  type: String
+  url: String
+}
+type SantaClaraCountySources16Entry {
+  name: String
+  type: String
+  url: String
+}
+type SantaClaraCountySources1Entry {
+  name: String
+  type: String
+  url: String
+}
+type SantaClaraCountySources2Entry {
+  name: String
+  type: String
+  url: String
+}
+type SantaClaraCountySources3Entry {
+  name: String
+  type: String
+  url: String
+}
+type SantaClaraCountySources4Entry {
+  name: String
+  type: String
+  url: String
+}
+type SantaClaraCountySources5Entry {
+  name: String
+  type: String
+  url: String
+}
+type SantaClaraCountySources6Entry {
+  name: String
+  type: String
+  url: String
+}
+type SantaClaraCountySources7Entry {
+  name: String
+  type: String
+  url: String
+}
+type SantaClaraCountySources8Entry {
+  name: String
+  type: String
+  url: String
+}
+type SantaClaraCountySourcesEntry {
+  name: String
+  type: String
+  url: String
+}
+type SantaClaraCountyTestPositivityRatio {
+  anomalies: [JSON]
+  sources: [SantaClaraCountySources10Entry]
+}
+type SantaClaraCountyTestPositivityRatioDetails {
+  source: String
+}
+type SantaClaraCountyVaccinationsAdditionalDose {
+  anomalies: [JSON]
+  sources: [SantaClaraCountySources11Entry]
+}
+type SantaClaraCountyVaccinationsCompleted {
+  anomalies: [JSON]
+  sources: [SantaClaraCountySources12Entry]
+}
+type SantaClaraCountyVaccinationsInitiated {
+  anomalies: [JSON]
+  sources: [SantaClaraCountySources13Entry]
+}
+type SantaClaraCountyVaccinationsInitiatedDemographics {
+  """
+  Object typed as JSON since it has fields ["0-17", "12-17", "18-49", "5-11", "50-64", "65_plus"] that are invalid graphql identifiers
+  """
+  age: JSON
+  ethnicity: JSON
+  race: SantaClaraCountyRace
+  sex: JSON
+}
+type SantaClaraCountyVaccinesAdministered {
+  anomalies: [JSON]
+  sources: [SantaClaraCountySources14Entry]
+}
+type SantaClaraCountyWeeklyCovidAdmissionsPer100k {
+  anomalies: [JSON]
+  sources: [SantaClaraCountySources15Entry]
+}
+type SantaClaraCountyWeeklyNewCasesPer100k {
+  anomalies: [SantaClaraCountyAnomalies16Entry]
+  sources: [SantaClaraCountySources16Entry]
+}
+
+type Query {
+  getSantaClaraCountyData: SantaClaraCountyRoot
+    @rest(
+      endpoint: "https://api.covidactnow.org/v2/county/06085.json?apiKey=$apiKey"
+      configuration: "covid_api_config"
+    )
+}

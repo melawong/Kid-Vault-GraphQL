@@ -8,3 +8,12 @@ type Mutation {
   ): JSON
     @rest(method: POST, endpoint: "https://test-mom-api.herokuapp.com/students")
 }
+
+type Return {
+  id: Int!
+  countyData: SantaClaraCountyRoot @materializer(query: "getSantaClaraCountyData")
+  classRoomData: [ClassroomList] @materializer(query: "getCovidClassroomList")
+}
+type Query {
+  topQuery(id: Int!): Return @connector(type: "echo")
+}
