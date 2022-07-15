@@ -40,8 +40,11 @@ type Student {
   image_url: String
   last_name: String!
   medical_records: MedicalRecords
-    @materializer(query: "getMedicalRecordsByStudentId", arguments: [{name: "student_id", field: "id"}])
-  users_list: [User] @materializer(query: "getUsersByGuardianChildren")
+    @materializer(
+      query: "getMedicalRecordsByStudentId"
+      arguments: [{ name: "student_id", field: "id" }]
+    )
+  guardian: Contact @materializer(query: "getPrimaryContactByStudentId")
 }
 
 type User {
@@ -60,11 +63,36 @@ type ClassroomList {
   classroom: String
   id: Int
   primary_contact: Contact @materializer(query: "getPrimaryContactByStudentId")
-  covid2: MedicalRecords @materializer(query: "getMedicalRecordsByStudentId", arguments: [{name: "student_id", field: "id"}])
+  covid2: MedicalRecords
+    @materializer(
+      query: "getMedicalRecordsByStudentId"
+      arguments: [{ name: "student_id", field: "id" }]
+    )
 }
 
+type CovidClassListWithCountyData {
+  students_list: [ClassroomList]
+}
 
 type Query {
+  collect: CovidClassListWithCountyData @connector(type: "echo")
+
+  getCovidListAndCountyData(
+    id: Int!
+    classroom: String
+    fips: String!
+  ): CovidClassListWithCountyData
+    @sequence(
+      steps: [
+        { query: "getCovidClassroomList" }
+        {
+          query: "getCurrDataByCounty"
+          arguments: [{ name: "fips", argument: "fips" }]
+        }
+        { query: "collect" }
+      ]
+    )
+
   getCovidClassroomList(id: Int!, classroom: String): [ClassroomList]
     @sequence(steps: [{ query: "getStudent" }, { query: "getClassroomList" }])
 
