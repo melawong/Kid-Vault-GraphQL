@@ -1,0 +1,129 @@
+type CountriesActuals {
+  cases: Int
+  contactTracers: Int
+  deaths: Int
+  hospitalBeds: CountriesHospitalBeds
+  hsaHospitalBeds: CountriesHsaHospitalBeds
+  hsaIcuBeds: CountriesHsaIcuBeds
+  icuBeds: CountriesIcuBeds
+  negativeTests: Int
+  newCases: Int
+  newDeaths: Int
+  positiveTests: Int
+  vaccinationsAdditionalDose: Int
+  vaccinationsCompleted: Int
+  vaccinationsInitiated: Int
+  vaccinationsInitiatedDemographics: JSON
+  vaccinesAdministered: Int
+  vaccinesAdministeredDemographics: JSON
+  vaccinesDistributed: Int
+}
+type CountriesAnnotations {
+  bedsWithCovidPatientsRatio: JSON
+  caseDensity: JSON
+  cases: JSON
+  contactTracerCapacityRatio: JSON
+  contactTracers: JSON
+  deaths: JSON
+  hospitalBeds: JSON
+  hsaHospitalBeds: JSON
+  hsaIcuBeds: JSON
+  icuBeds: JSON
+  icuCapacityRatio: JSON
+  infectionRate: JSON
+  infectionRateCI90: JSON
+  negativeTests: JSON
+  newCases: JSON
+  newDeaths: JSON
+  positiveTests: JSON
+  testPositivityRatio: JSON
+  vaccinationsAdditionalDose: JSON
+  vaccinationsAdditionalDoseRatio: JSON
+  vaccinationsCompleted: JSON
+  vaccinationsCompletedRatio: JSON
+  vaccinationsInitiated: JSON
+  vaccinationsInitiatedRatio: JSON
+  vaccinesAdministered: JSON
+  vaccinesDistributed: JSON
+  weeklyCovidAdmissionsPer100k: JSON
+  weeklyNewCasesPer100k: JSON
+}
+type CountriesCommunityLevels {
+  canCommunityLevel: Int
+  cdcCommunityLevel: JSON
+}
+type CountriesHospitalBeds {
+  capacity: Int
+  currentUsageCovid: Int
+  currentUsageTotal: Int
+  weeklyCovidAdmissions: Int
+}
+type CountriesHsaHospitalBeds {
+  capacity: JSON
+  currentUsageCovid: JSON
+  currentUsageTotal: JSON
+  weeklyCovidAdmissions: JSON
+}
+type CountriesHsaIcuBeds {
+  capacity: JSON
+  currentUsageCovid: JSON
+  currentUsageTotal: JSON
+}
+type CountriesIcuBeds {
+  capacity: Int
+  currentUsageCovid: Int
+  currentUsageTotal: Int
+}
+type CountriesMetrics {
+  bedsWithCovidPatientsRatio: Float
+  caseDensity: Float
+  contactTracerCapacityRatio: JSON
+  icuCapacityRatio: Float
+  infectionRate: Float
+  infectionRateCI90: Float
+  testPositivityRatio: Float
+  testPositivityRatioDetails: CountriesTestPositivityRatioDetails
+  vaccinationsAdditionalDoseRatio: Float
+  vaccinationsCompletedRatio: Float
+  vaccinationsInitiatedRatio: Float
+  weeklyCovidAdmissionsPer100k: Float
+  weeklyNewCasesPer100k: Float
+}
+type CountriesRiskLevels {
+  caseDensity: Int
+  contactTracerCapacityRatio: Int
+  icuCapacityRatio: Int
+  infectionRate: Int
+  overall: Int
+  testPositivityRatio: Int
+}
+type CountriesRootEntry {
+  actuals: CountriesActuals
+  annotations: CountriesAnnotations
+  cdcTransmissionLevel: Int
+  communityLevels: CountriesCommunityLevels
+  country: String
+  county: JSON
+  fips: Int
+  hsa: JSON
+  hsaName: JSON
+  hsaPopulation: JSON
+  lastUpdatedDate: Date
+  lat: JSON
+  level: String
+  locationId: String
+  long: JSON
+  metrics: CountriesMetrics
+  population: Int
+  riskLevels: CountriesRiskLevels
+  state: JSON
+  url: JSON
+}
+type CountriesTestPositivityRatioDetails {
+  source: String
+}
+
+type Query {
+  getAllCountryData(apiKey: String): [CountriesRootEntry]
+    @rest(endpoint: "https://api.covidactnow.org/v2/countries.json")
+}
