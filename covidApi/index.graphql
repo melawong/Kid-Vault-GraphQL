@@ -19,16 +19,6 @@ type riskLevels {
   testPositivityRatio: Int
 }
 
-type CountyEdge {
-  node: JSON
-  cursor: String
-}
-
-type CountyConnection {
-  pageInfo: PageInfo!
-  edges: [CountyEdge]
-}
-
 type Query {
   getCurrStateData: JSON
     @rest(
@@ -63,17 +53,6 @@ type Query {
   getCurrDataByCBSA(cbsa_code: String!): JSON
     @rest(
       endpoint: "https://api.covidactnow.org/v2/cbsa/$cbsa_code.json?apiKey=$apiKey"
-      configuration: "covid_api_config"
-    )
-
-  getPaginatedCountyData(first: Int! =2, after: String! =""): CountyConnection
-    @rest(
-      endpoint: "https://api.covidactnow.org/v2/counties.json?apiKey=$apiKey&limit=$first&offset=$after"
-      resultroot:"data[]"
-      pagination: {
-        type: OFFSET
-        setters: [{field:"total" path: "meta.total_count"}]
-      }
       configuration: "covid_api_config"
     )
 }

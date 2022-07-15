@@ -1,27 +1,3 @@
-type StudentEdge {
-  node: Student
-  cursor: String
-}
-
-type StudentConnection {
-  pageInfo: PageInfo!
-  edges: [StudentEdge]
-}
-
-type Query {
-  getPaginatedStudentList(
-    first: Int! = 2
-    after: String = ""
-  ): StudentConnection
-    @rest(
-      endpoint: "https://test-mom-api.herokuapp.com/students?limit=$first"
-      pagination: {
-        type: OFFSET
-        setters: [{ field: "total", path: "meta.total_count" }]
-      }
-    )
-}
-
 type Mutation {
   insertStudent(
     first_name: String!
