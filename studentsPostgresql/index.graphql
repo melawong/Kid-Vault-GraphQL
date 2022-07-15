@@ -70,26 +70,7 @@ type ClassroomList {
     )
 }
 
-type CovidClassListWithCountyData {
-  caseDensity: Int
-}
-
 type Query {
-  collect(caseDensity: Int): CovidClassListWithCountyData
-    @connector(type: "echo")
-
-  covidClassListWithCountyData(
-    id: Int!
-    classroom: String
-  ): CovidClassListWithCountyData
-    @sequence(
-      steps: [
-        { query: "getCovidClassroomList" }
-        { query: "getSantaClaraCountyData" }
-        { query: "collect" }
-      ]
-    )
-
   getCovidClassroomList(id: Int!, classroom: String): [ClassroomList]
     @sequence(steps: [{ query: "getStudent" }, { query: "getClassroomList" }])
 
