@@ -3,7 +3,6 @@ schema
     files: [
       "covidApi/index.graphql"
       "covidCountyFull/index.graphql"
-      "covidCountriesFull/index.graphql"
       "covidSantaClaraCounty/index.graphql"
       "studentsPostgresql/index.graphql"
       "studentsRest/index.graphql"
