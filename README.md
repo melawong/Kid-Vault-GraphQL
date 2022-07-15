@@ -1,18 +1,14 @@
 This **StepZen GraphQL API** serves as the middle layer for the **Kid Vault** app, which was built as part of the StepZen Challenge 2022.
 
-The frontend and mock-backend code repositories can be viewed here:
+The frontend and backend code repositories can be viewed here:
 - [React Frontend](https://github.com/melawong/mom-api-frontend)
 - [Flask Backend](https://github.com/anita-lee/mom_api2)
 
-This API connects three backends:
+The deployed version of the Flask backend with a mock Postgres database is viewable here:
+- [Deployed Backend with Postgres data](https://test-mom-api.herokuapp.com/)
 
-1. Flask API Back-End: mom_api2
 
-2. StepZen: test_stepzen
-
-3. React Front-End: mom-api-frontend
-
-To install this code on your computer, please follow these directions:
+To install this repository on your computer, please follow these instructions:
 
 1. Flask API Back-End => mom_api2
 
