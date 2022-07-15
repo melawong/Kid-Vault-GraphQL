@@ -14,9 +14,13 @@ The deployed version of the Flask backend with a mock Postgres database is viewa
 
 To install this repository on your computer, please follow these instructions:
 
-1. Flask API Back-End => mom_api2
+### Installing StepZen
 
-### Installing Dependencies
+If you haven't already, be sure to sign up for and install StepZen.
+
+[Detailed StepZen installation instructions are available here.](https://stepzen.com/docs/quick-start/install-and-setup)
+
+
 
 ```
 python3 -m venv venv
