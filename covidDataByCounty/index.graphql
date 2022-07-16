@@ -1,0 +1,330 @@
+type CountyActuals {
+  cases: Int
+  contactTracers: JSON
+  deaths: Int
+  hospitalBeds: CountyHospitalBeds
+  hsaHospitalBeds: CountyHsaHospitalBeds
+  hsaIcuBeds: CountyHsaIcuBeds
+  icuBeds: CountyIcuBeds
+  negativeTests: JSON
+  newCases: Int
+  newDeaths: Int
+  positiveTests: JSON
+  vaccinationsAdditionalDose: Int
+  vaccinationsCompleted: Int
+  vaccinationsInitiated: Int
+  vaccinationsInitiatedDemographics: CountyVaccinationsInitiatedDemographics
+  vaccinesAdministered: Int
+  vaccinesAdministeredDemographics: JSON
+  vaccinesDistributed: JSON
+}
+type CountyAnnotations {
+  bedsWithCovidPatientsRatio: CountyBedsWithCovidPatientsRatio
+  caseDensity: CountyCaseDensity
+  cases: CountyCases
+  contactTracerCapacityRatio: JSON
+  contactTracers: JSON
+  deaths: CountyDeaths
+  hospitalBeds: CountyHospitalBeds1
+  hsaHospitalBeds: JSON
+  hsaIcuBeds: JSON
+  icuBeds: CountyIcuBeds1
+  icuCapacityRatio: CountyIcuCapacityRatio
+  infectionRate: CountyInfectionRate
+  infectionRateCI90: CountyInfectionRateCI90
+  negativeTests: JSON
+  newCases: CountyNewCases
+  newDeaths: JSON
+  positiveTests: JSON
+  testPositivityRatio: CountyTestPositivityRatio
+  vaccinationsAdditionalDose: CountyVaccinationsAdditionalDose
+  vaccinationsAdditionalDoseRatio: JSON
+  vaccinationsCompleted: CountyVaccinationsCompleted
+  vaccinationsCompletedRatio: JSON
+  vaccinationsInitiated: CountyVaccinationsInitiated
+  vaccinationsInitiatedRatio: JSON
+  vaccinesAdministered: CountyVaccinesAdministered
+  vaccinesDistributed: JSON
+  weeklyCovidAdmissionsPer100k: CountyWeeklyCovidAdmissionsPer100k
+  weeklyNewCasesPer100k: CountyWeeklyNewCasesPer100k
+}
+type CountyAnomalies16Entry {
+  date: Date
+  original_observation: Int
+  type: String
+}
+type CountyAnomalies1Entry {
+  date: Date
+  original_observation: Int
+  type: String
+}
+type CountyAnomalies2Entry {
+  date: Date
+  original_observation: Int
+  type: String
+}
+type CountyAnomalies7Entry {
+  date: Date
+  original_observation: Int
+  type: String
+}
+type CountyAnomalies8Entry {
+  date: Date
+  original_observation: Int
+  type: String
+}
+type CountyAnomalies9Entry {
+  date: Date
+  original_observation: Int
+  type: String
+}
+type CountyBedsWithCovidPatientsRatio {
+  anomalies: [JSON]
+  sources: [CountySourcesEntry]
+}
+type CountyCaseDensity {
+  anomalies: [CountyAnomalies1Entry]
+  sources: [CountySources1Entry]
+}
+type CountyCases {
+  anomalies: [CountyAnomalies2Entry]
+  sources: [CountySources2Entry]
+}
+type CountyCommunityLevels {
+  canCommunityLevel: Int
+  cdcCommunityLevel: Int
+}
+type CountyDeaths {
+  anomalies: [JSON]
+  sources: [CountySources3Entry]
+}
+type CountyHospitalBeds {
+  capacity: Int
+  currentUsageCovid: Int
+  currentUsageTotal: Int
+  weeklyCovidAdmissions: Int
+}
+type CountyHospitalBeds1 {
+  anomalies: [JSON]
+  sources: [CountySources4Entry]
+}
+type CountyHsaHospitalBeds {
+  capacity: Int
+  currentUsageCovid: Int
+  currentUsageTotal: Int
+  weeklyCovidAdmissions: Int
+}
+type CountyHsaIcuBeds {
+  capacity: Int
+  currentUsageCovid: Int
+  currentUsageTotal: Int
+}
+type CountyIcuBeds {
+  capacity: Int
+  currentUsageCovid: Int
+  currentUsageTotal: Int
+}
+type CountyIcuBeds1 {
+  anomalies: [JSON]
+  sources: [CountySources5Entry]
+}
+type CountyIcuCapacityRatio {
+  anomalies: [JSON]
+  sources: [CountySources6Entry]
+}
+type CountyInfectionRate {
+  anomalies: [CountyAnomalies7Entry]
+  sources: [CountySources7Entry]
+}
+type CountyInfectionRateCI90 {
+  anomalies: [CountyAnomalies8Entry]
+  sources: [CountySources8Entry]
+}
+type CountyMetrics {
+  bedsWithCovidPatientsRatio: Float
+  caseDensity: Float
+  contactTracerCapacityRatio: JSON
+  icuCapacityRatio: Float
+  infectionRate: Float
+  infectionRateCI90: Float
+  testPositivityRatio: Float
+  testPositivityRatioDetails: CountyTestPositivityRatioDetails
+  vaccinationsAdditionalDoseRatio: Float
+  vaccinationsCompletedRatio: Float
+  vaccinationsInitiatedRatio: Float
+  weeklyCovidAdmissionsPer100k: Float
+  weeklyNewCasesPer100k: Float
+}
+type CountyNewCases {
+  anomalies: [CountyAnomalies9Entry]
+  sources: [JSON]
+}
+type CountyRace {
+  ai_an: Int
+  asian: Int
+  black: Int
+  latino: Int
+  multiple: Int
+  other: Int
+  pacific_islander: Int
+  unknown: Int
+  white: Int
+}
+type CountyRiskLevels {
+  caseDensity: Int
+  contactTracerCapacityRatio: Int
+  icuCapacityRatio: Int
+  infectionRate: Int
+  overall: Int
+  testPositivityRatio: Int
+}
+type CountyRoot {
+  actuals: CountyActuals
+  annotations: CountyAnnotations
+  cdcTransmissionLevel: Int
+  communityLevels: CountyCommunityLevels
+  country: String
+  county: String
+  fips: Int
+  hsa: Int
+  hsaName: String
+  hsaPopulation: Int
+  lastUpdatedDate: Date
+  lat: JSON
+  level: String
+  locationId: String
+  long: JSON
+  metrics: CountyMetrics
+  population: Int
+  riskLevels: CountyRiskLevels
+  state: String
+  url: String
+}
+type CountySources10Entry {
+  name: String
+  type: String
+  url: String
+}
+type CountySources11Entry {
+  name: String
+  type: String
+  url: String
+}
+type CountySources12Entry {
+  name: String
+  type: String
+  url: String
+}
+type CountySources13Entry {
+  name: String
+  type: String
+  url: String
+}
+type CountySources14Entry {
+  name: String
+  type: String
+  url: String
+}
+type CountySources15Entry {
+  name: String
+  type: String
+  url: String
+}
+type CountySources16Entry {
+  name: String
+  type: String
+  url: String
+}
+type CountySources1Entry {
+  name: String
+  type: String
+  url: String
+}
+type CountySources2Entry {
+  name: String
+  type: String
+  url: String
+}
+type CountySources3Entry {
+  name: String
+  type: String
+  url: String
+}
+type CountySources4Entry {
+  name: String
+  type: String
+  url: String
+}
+type CountySources5Entry {
+  name: String
+  type: String
+  url: String
+}
+type CountySources6Entry {
+  name: String
+  type: String
+  url: String
+}
+type CountySources7Entry {
+  name: String
+  type: String
+  url: String
+}
+type CountySources8Entry {
+  name: String
+  type: String
+  url: String
+}
+type CountySourcesEntry {
+  name: String
+  type: String
+  url: String
+}
+type CountyTestPositivityRatio {
+  anomalies: [JSON]
+  sources: [CountySources10Entry]
+}
+type CountyTestPositivityRatioDetails {
+  source: String
+}
+type CountyVaccinationsAdditionalDose {
+  anomalies: [JSON]
+  sources: [CountySources11Entry]
+}
+type CountyVaccinationsCompleted {
+  anomalies: [JSON]
+  sources: [CountySources12Entry]
+}
+type CountyVaccinationsInitiated {
+  anomalies: [JSON]
+  sources: [CountySources13Entry]
+}
+type CountyVaccinationsInitiatedDemographics {
+  """
+  Object typed as JSON since it has fields ["0-17", "12-17", "18-49", "5-11", "50-64", "65_plus"] that are invalid graphql identifiers
+  """
+  age: JSON
+  ethnicity: JSON
+  race: CountyRace
+  sex: JSON
+}
+type CountyVaccinesAdministered {
+  anomalies: [JSON]
+  sources: [CountySources14Entry]
+}
+type CountyWeeklyCovidAdmissionsPer100k {
+  anomalies: [JSON]
+  sources: [CountySources15Entry]
+}
+type CountyWeeklyNewCasesPer100k {
+  anomalies: [CountyAnomalies16Entry]
+  sources: [CountySources16Entry]
+}
+
+type Query {
+  getCurrDataByCounty(fips: String!): CountyRoot
+    @rest(
+      endpoint: "https://api.covidactnow.org/v2/county/$fips.json?apiKey=$apiKey"
+      configuration: "covid_api_config"
+    )
+}

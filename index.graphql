@@ -1,9 +1,7 @@
 schema
   @sdl(
     files: [
-      "covidApi/index.graphql"
-      "covidCountyFull/index.graphql"
-      "covidSantaClaraCounty/index.graphql"
+      "covidDataByCounty/index.graphql"
       "studentsPostgresql/index.graphql"
       "studentsRest/index.graphql"
       "users/index.graphql"

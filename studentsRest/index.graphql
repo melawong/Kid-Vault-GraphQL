@@ -5,15 +5,23 @@ type Mutation {
     birth_date: String!
     classroom: String!
     image_url: String!
-  ): JSON
+  ): Student
     @rest(method: POST, endpoint: "https://test-mom-api.herokuapp.com/students")
+
+  insertGuardianChild(child_id: Int!, guardian_username: String!): JSON
+    @rest(
+      method: POST
+      endpoint: "https://test-mom-api.herokuapp.com/guardianchildren"
+    )
 }
 
-type Return {
+type CombinedClassCountyData {
   id: Int!
-  countyData: SantaClaraCountyRoot @materializer(query: "getSantaClaraCountyData")
-  classRoomData: [ClassroomList] @materializer(query: "getCovidClassroomList")
+  fips: String!
+  county_data: CountyRoot @materializer(query: "getCurrDataByCounty")
+  class_data: [ClassroomList] @materializer(query: "getCovidClassroomList")
 }
 type Query {
-  topQuery(id: Int!): Return @connector(type: "echo")
+  getCombinedClassCountyData(id: Int!, fips: String!): CombinedClassCountyData
+    @connector(type: "echo")
 }

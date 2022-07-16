@@ -1,3 +1,29 @@
+type User {
+  email: String!
+  first_name: String!
+  is_guardian: Boolean
+  last_name: String!
+  phone: String!
+  students_list: [Student] @materializer(query: "getStudentsByGuardianChildren")
+  username: String!
+}
+
+type Student {
+  birth_date: String!
+  classroom: String
+  contacts_list: [Contact] @materializer(query: "getContactsByStudentId")
+  first_name: String!
+  id: Int!
+  image_url: String
+  last_name: String!
+  medical_records: MedicalRecords
+    @materializer(
+      query: "getMedicalRecordsByStudentId"
+      arguments: [{ name: "student_id", field: "id" }]
+    )
+  guardian: Contact @materializer(query: "getPrimaryContactByStudentId")
+}
+
 type Contact {
   email: String
   id: Int!
@@ -31,32 +57,6 @@ type MedicalRecords {
   tetanus: String
 }
 
-type Student {
-  birth_date: String!
-  classroom: String
-  contacts_list: [Contact] @materializer(query: "getContactsByStudentId")
-  first_name: String!
-  id: Int!
-  image_url: String
-  last_name: String!
-  medical_records: MedicalRecords
-    @materializer(
-      query: "getMedicalRecordsByStudentId"
-      arguments: [{ name: "student_id", field: "id" }]
-    )
-  guardian: Contact @materializer(query: "getPrimaryContactByStudentId")
-}
-
-type User {
-  email: String!
-  first_name: String!
-  is_guardian: Boolean
-  last_name: String!
-  phone: String!
-  students_list: [Student] @materializer(query: "getStudentsByGuardianChildren")
-  username: String!
-}
-
 type ClassroomList {
   first_name: String
   last_name: String
@@ -73,17 +73,6 @@ type ClassroomList {
 type Query {
   getCovidClassroomList(id: Int!, classroom: String): [ClassroomList]
     @sequence(steps: [{ query: "getStudent" }, { query: "getClassroomList" }])
-
-  getUnvaxedCovidClassroomList(id: Int!, classroom: String!): [ClassroomList]
-    @dbquery(
-      type: "postgresql"
-      query: """
-      SELECT T."last_name", T."first_name", T."id", V."covid2"
-        FROM "public"."students" T, "public"."medical_records" V
-        WHERE T."id" != $1 AND T."classroom" = $2 AND V."covid2" = "n/a"
-      """
-      configuration: "postgresql_config"
-    )
 
   getClassroomList(classroom: String!): [ClassroomList]
     @dbquery(
@@ -144,18 +133,6 @@ type Query {
       configuration: "postgresql_config"
     )
 
-  getUsersByGuardianChildren(id: Int!): [User]
-    @dbquery(
-      type: "postgresql"
-      query: """
-      SELECT T."email", T."first_name", T."is_guardian", T."last_name", T."phone", T."username"
-        FROM "public"."users" T, "public"."guardian_children" V
-        WHERE V."child_id" = $1
-          AND V."guardian_username" = T."username"
-      """
-      configuration: "postgresql_config"
-    )
-
   getContactsByStudentId(id: Int!): [Contact]
     @dbquery(
       type: "postgresql"
@@ -203,6 +180,18 @@ type Query {
         FROM "public"."students" T, "public"."guardian_children" V
         WHERE V."guardian_username" = $1
           AND V."child_id" = T."id"
+      """
+      configuration: "postgresql_config"
+    )
+
+  getUsersByGuardianChildren(id: Int!): [User]
+    @dbquery(
+      type: "postgresql"
+      query: """
+      SELECT T."email", T."first_name", T."is_guardian", T."last_name", T."phone", T."username"
+        FROM "public"."users" T, "public"."guardian_children" V
+        WHERE V."child_id" = $1
+          AND V."guardian_username" = T."username"
       """
       configuration: "postgresql_config"
     )
@@ -269,23 +258,6 @@ type Mutation {
       schema: "public"
       table: "students"
       dml: DELETE
-      configuration: "postgresql_config"
-    )
-
-  insertUser(
-    last_name: String!
-    email: String!
-    phone: String!
-    first_name: String!
-    username: String!
-    is_guardian: Boolean!
-    password: String!
-  ): User
-    @dbquery(
-      type: "postgresql"
-      schema: "public"
-      table: "users"
-      dml: INSERT
       configuration: "postgresql_config"
     )
 
