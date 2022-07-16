@@ -2,8 +2,7 @@ schema
   @sdl(
     files: [
       "covidDataByCounty/index.graphql"
-      "studentsPostgresql/index.graphql"
-      "studentsRest/index.graphql"
+      "students/index.graphql"
       "users/index.graphql"
     ]
   ) {

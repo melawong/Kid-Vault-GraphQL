@@ -1,13 +1,3 @@
-type User {
-  email: String!
-  first_name: String!
-  is_guardian: Boolean
-  last_name: String!
-  phone: String!
-  students_list: [Student] @materializer(query: "getStudentsByGuardianChildren")
-  username: String!
-}
-
 type Student {
   birth_date: String!
   classroom: String
@@ -70,7 +60,17 @@ type ClassroomList {
     )
 }
 
+type CombinedClassCountyData {
+  id: Int!
+  fips: String!
+  county_data: CountyRoot @materializer(query: "getCurrDataByCounty")
+  class_data: [ClassroomList] @materializer(query: "getCovidClassroomList")
+}
+
 type Query {
+  getCombinedClassCountyData(id: Int!, fips: String!): CombinedClassCountyData
+    @connector(type: "echo")
+
   getCovidClassroomList(id: Int!, classroom: String): [ClassroomList]
     @sequence(steps: [{ query: "getStudent" }, { query: "getClassroomList" }])
 
@@ -156,22 +156,6 @@ type Query {
       configuration: "postgresql_config"
     )
 
-  getUsersList: [User]
-    @dbquery(
-      type: "postgresql"
-      schema: "public"
-      table: "users"
-      configuration: "postgresql_config"
-    )
-
-  getUserByUsername(username: String!): User
-    @dbquery(
-      type: "postgresql"
-      schema: "public"
-      table: "users"
-      configuration: "postgresql_config"
-    )
-
   getStudentsByGuardianChildren(username: String!): [Student]
     @dbquery(
       type: "postgresql"
@@ -183,21 +167,24 @@ type Query {
       """
       configuration: "postgresql_config"
     )
-
-  getUsersByGuardianChildren(id: Int!): [User]
-    @dbquery(
-      type: "postgresql"
-      query: """
-      SELECT T."email", T."first_name", T."is_guardian", T."last_name", T."phone", T."username"
-        FROM "public"."users" T, "public"."guardian_children" V
-        WHERE V."child_id" = $1
-          AND V."guardian_username" = T."username"
-      """
-      configuration: "postgresql_config"
-    )
 }
 
 type Mutation {
+  insertStudent(
+    first_name: String!
+    last_name: String!
+    birth_date: String!
+    classroom: String!
+    image_url: String!
+  ): Student
+    @rest(method: POST, endpoint: "https://test-mom-api.herokuapp.com/students")
+
+  insertGuardianChild(child_id: Int!, guardian_username: String!): JSON
+    @rest(
+      method: POST
+      endpoint: "https://test-mom-api.herokuapp.com/guardianchildren"
+    )
+
   insertContact(
     other: String!
     email: String!
@@ -261,12 +248,4 @@ type Mutation {
       configuration: "postgresql_config"
     )
 
-  deleteUser(username: String!): User
-    @dbquery(
-      type: "postgresql"
-      schema: "public"
-      table: "users"
-      dml: DELETE
-      configuration: "postgresql_config"
-    )
 }

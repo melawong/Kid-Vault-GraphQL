@@ -1,3 +1,43 @@
+type User {
+  email: String!
+  first_name: String!
+  is_guardian: Boolean
+  last_name: String!
+  phone: String!
+  students_list: [Student] @materializer(query: "getStudentsByGuardianChildren")
+  username: String!
+}
+
+type Query {
+  getUsersList: [User]
+    @dbquery(
+      type: "postgresql"
+      schema: "public"
+      table: "users"
+      configuration: "postgresql_config"
+    )
+
+  getUserByUsername(username: String!): User
+    @dbquery(
+      type: "postgresql"
+      schema: "public"
+      table: "users"
+      configuration: "postgresql_config"
+    )
+
+  getUsersByGuardianChildren(id: Int!): [User]
+    @dbquery(
+      type: "postgresql"
+      query: """
+      SELECT T."email", T."first_name", T."is_guardian", T."last_name", T."phone", T."username"
+        FROM "public"."users" T, "public"."guardian_children" V
+        WHERE V."child_id" = $1
+          AND V."guardian_username" = T."username"
+      """
+      configuration: "postgresql_config"
+    )
+}
+
 type Mutation {
   signupUser(
     first_name: String!
@@ -11,6 +51,13 @@ type Mutation {
 
   loginUser(username: String!, password: String!): JSON
     @rest(method: POST, endpoint: "https://test-mom-api.herokuapp.com/login")
+
+  deleteUser(username: String!): User
+    @dbquery(
+      type: "postgresql"
+      schema: "public"
+      table: "users"
+      dml: DELETE
+      configuration: "postgresql_config"
+    )
 }
-
-
