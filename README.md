@@ -2,16 +2,16 @@
 
 ## ABOUT
 
-This **StepZen GraphQL API** serves as the middle layer for the **Kid Vault** app, which was built as part of the StepZen Challenge 2022.
+This **StepZen GraphQL API** serves as the middle layer for the **Kid Vault** app, which was built as part of the StepZen GraphQL Challenge 2022.
 
-The frontend and backend code repositories can be viewed here:
+The front-end and back-end code repositories can be viewed here:
 
-- [React Frontend](https://github.com/melawong/mom-api-frontend)
-- [Flask Backend](https://github.com/anita-lee/mom_api2)
+- [React Front-end](https://github.com/melawong/mom-api-frontend)
+- [Flask Back-end](https://github.com/anita-lee/mom_api2)
 
-The deployed version of the Flask backend with a mock Postgres database is viewable here:
+The deployed version of the Flask back-end with a mock Postgres database is viewable here:
 
-- [Heroku Backend with Postgres data](https://test-mom-api.herokuapp.com/)
+- [Heroku Back-end with Postgres data](https://test-mom-api.herokuapp.com/)
 
 `NOTE:` _Heroku often takes some time to wake up! Don't forget to give it a minute._
 
@@ -35,7 +35,7 @@ If you haven't already, be sure to sign up for and install StepZen.
 
 1. [Register for COVID Act Now](https://apidocs.covidactnow.org/) to get your API key.
 
-2. Setup your [Flask Backend](https://github.com/anita-lee/mom_api2) with your Postgres database.
+2. Setup your [Flask Back-end](https://github.com/anita-lee/mom_api2) with your Postgres database.
 
    - _You can choose to seed with our mock data .csv file or add your own, but you'll need our schemas/tables for this API to function properly!_
 
